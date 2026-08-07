@@ -16,7 +16,7 @@ const port = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/student",studentrecordrouter);
+app.use('/api/student',studentrecordrouter);
 
 const startServer = async () => {
     try{

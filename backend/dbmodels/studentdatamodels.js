@@ -27,6 +27,12 @@ const studentSchema = new mongoose.Schema(
       },
       trim: true,
     },
+    parentname:{
+      type: String,
+      required: [true, "Parent name is required"],
+      trim: true,
+    },
+    
     phoneNumber: {
       type: String,
       required: [true, "Phone number is required"],
