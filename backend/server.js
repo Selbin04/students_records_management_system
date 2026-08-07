@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./database/db.js";
 import dns from 'dns'
+import studentrecordrouter from "./routers/studentrecord.route.js"; 
 
 dns.setServers([
     '1.1.1.1',
@@ -15,6 +16,7 @@ const port = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/student",studentrecordrouter);
 
 const startServer = async () => {
     try{
