@@ -18,6 +18,11 @@ const studentSchema = new mongoose.Schema(
         "Please provide a valid email address",
       ],
     },
+    fatherName: {
+      type: String,
+      required: [true, "Father's name is required"],
+      trim: true,
+    },
     phoneNumber: {
       type: String,
       required: [true, "Phone number is required"],
