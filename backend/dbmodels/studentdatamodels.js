@@ -18,21 +18,6 @@ const studentSchema = new mongoose.Schema(
         "Please provide a valid email address",
       ],
     },
-    gender: {
-      type: String,
-      required: [true, "Gender is required"], 
-      enum: {
-        values: ["Male", "Female", "Other", "male", "female", "other"],
-        message: "{VALUE} is not a valid gender choice",
-      },
-      trim: true,
-    },
-    parentname:{
-      type: String,
-      required: [true, "Parent name is required"],
-      trim: true,
-    },
-    
     phoneNumber: {
       type: String,
       required: [true, "Phone number is required"],
