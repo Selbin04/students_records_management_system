@@ -68,13 +68,20 @@ const editstudent = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, email, fatherName, phoneNumber } = req.body;
+
+        if (!name || !email || !fatherName || !phoneNumber) {
+            return res.status(400).json({
+                message: "Name, email, father's name, and phone number are required",
+            });
+        }
+
         const updatedstudent = await Student.findByIdAndUpdate(
             id,
             {
                 name,
-                email,
+                email: email.toLowerCase().trim(),
                 fatherName,
-                phoneNumber: phoneNumber !== undefined ? String(phoneNumber) : undefined,
+                phoneNumber: String(phoneNumber).trim(),
             },
             { new: true, runValidators: true }
         );
