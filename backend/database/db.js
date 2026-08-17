@@ -1,13 +1,30 @@
 import mongoose from "mongoose";
 import 'dotenv/config';
 
+let connectionPromise;
+
 const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log("Database connected successfully");
-    } catch (error) {
-        console.log("Database connection failed", error);
-        process.exit(1);
+    if (mongoose.connection.readyState === 1) {
+        return mongoose.connection;
     }
-}
+
+    if (!process.env.MONGO_URI) {
+        throw new Error("MONGO_URI is not set");
+    }
+
+    if (!connectionPromise) {
+        connectionPromise = mongoose.connect(process.env.MONGO_URI);
+    }
+
+    try {
+        await connectionPromise;
+        console.log("Database connected successfully");
+        return mongoose.connection;
+    } catch (error) {
+        connectionPromise = null;
+        console.log("Database connection failed", error);
+        throw error;
+    }
+};
+
 export default connectDB;

@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import axios from 'axios'
 
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '',
+});
+
 const emptyForm = {
   name: '',
   email: '',
@@ -18,7 +22,7 @@ function App() {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/student');
+      const response = await api.get('/api/student');
       setStudents(response.data || []);
     } catch (err) {
       console.log(err);
@@ -46,13 +50,10 @@ function App() {
 
     try {
       if (editingId) {
-        const response = await axios.put(
-          `http://localhost:3000/api/student/${editingId}`,
-          formData
-        );
+        const response = await api.put(`/api/student/${editingId}`, formData);
         setSuccess(response.data.message || 'Student updated successfully');
       } else {
-        const response = await axios.post('http://localhost:3000/api/student', formData);
+        const response = await api.post('/api/student', formData);
         setSuccess(response.data.message || 'Student added successfully');
       }
 
@@ -86,7 +87,7 @@ function App() {
     setSuccess('');
 
     try {
-      const response = await axios.delete(`http://localhost:3000/api/student/${id}`);
+      const response = await api.delete(`/api/student/${id}`);
       setSuccess(response.data.message || 'Student deleted successfully');
 
       if (editingId === id) {
