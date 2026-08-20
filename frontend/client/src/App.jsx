@@ -42,6 +42,14 @@ function App() {
     setFormData(emptyForm);
     setEditingId(null);
   };
+  
+  useEffect(() => {
+    if (!success) return;
+    const timer = setTimeout(() => {
+      setSuccess('');
+    }, 5000);
+    return () => clearTimeout(timer); 
+  }, [success]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,10 +59,10 @@ function App() {
     try {
       if (editingId) {
         const response = await api.put(`/api/student/${editingId}`, formData);
-        setSuccess(response.data.message || 'Student updated successfully');
+       setSuccess(response.data.message || 'Student updated successfully');
       } else {
         const response = await api.post('/api/student', formData);
-        setSuccess(response.data.message || 'Student added successfully');
+       setSuccess(response.data.message || 'Student added successfully');
       }
 
       resetForm();
